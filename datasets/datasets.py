@@ -5,8 +5,6 @@ from pathlib import Path
 import time
 import urllib.request
 
-SMOKE_TEST = False
-
 DATASET_REGISTRY = {
     "SWellEx96EventS5VLA": "http://swellex96.ucsd.edu/downloads/J1312315.vla.21els.sio.gz",
     "SWellEx96EventS5TLA": "http://swellex96.ucsd.edu/downloads/J1312315.tla.22els.sio.gz",
@@ -32,10 +30,7 @@ class Dataset:
 
         logging.info(f"Downloading {self.filename} ({file_size:.2f} MB)")
         start = time.time()
-        if SMOKE_TEST:
-            time.sleep(2)
-        else:
-            urllib.request.urlretrieve(self.url, path / self.url.split("/")[-1])
+        urllib.request.urlretrieve(self.url, path / self.url.split("/")[-1])
         elapsed = time.time() - start
         logging.info(f"Downloaded {self.filename} in {elapsed:.2f} seconds")
 
