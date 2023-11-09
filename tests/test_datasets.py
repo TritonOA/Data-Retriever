@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, MagicMock, Mock
 from pathlib import Path
 from datasets import datasets
 
@@ -39,31 +39,30 @@ class TestDataset(unittest.TestCase):
         )
 
 
-class TestSWellEx96EventS5VLA(unittest.TestCase):
-    def test_init(self):
-        dataset = datasets.SWellEx96EventS5VLA()
-        self.assertEqual(dataset.url, datasets.DATASET_REGISTRY["SWellEx96EventS5VLA"])
+class TestDownloadData(unittest.TestCase):
+    @patch("datasets.datasets.get_dataset")
+    def test_download_data(self, mock_get_dataset):
+        # Create a mock dataset object with a mock download method
+        mock_dataset = MagicMock(spec=datasets.Dataset)
+        mock_get_dataset.return_value = mock_dataset
+
+        # Call the function we are testing
+        datasets.download_data("SWellEx96EventS5VLA", Path("/tmp"), False)
+
+        # Check that get_dataset was called with the correct argument
+        mock_get_dataset.assert_called_once_with("SWellEx96EventS5VLA")
+
+        # Check that the download method was called with the correct arguments
+        mock_dataset.download.assert_called_once_with(Path("/tmp"), False)
 
 
-class TestSWellEx96EventS5TLA(unittest.TestCase):
-    def test_init(self):
-        dataset = datasets.SWellEx96EventS5TLA()
-        self.assertEqual(dataset.url, datasets.DATASET_REGISTRY["SWellEx96EventS5TLA"])
-
-
-class TestSWellEx96EventS5HLANorth(unittest.TestCase):
-    def test_init(self):
-        dataset = datasets.SWellEx96EventS5HLANorth()
+class TestGetDataset(unittest.TestCase):
+    @patch("datasets.datasets.DATASET_REGISTRY", datasets.DATASET_REGISTRY)
+    def test_get_dataset(self):
+        dataset = datasets.get_dataset("SWellEx96EventS5VLA")
+        self.assertIsInstance(dataset, datasets.Dataset)
         self.assertEqual(
-            dataset.url, datasets.DATASET_REGISTRY["SWellEx96EventS5HLANorth"]
-        )
-
-
-class TestSWellEx96EventS5HLASouth(unittest.TestCase):
-    def test_init(self):
-        dataset = datasets.SWellEx96EventS5HLASouth()
-        self.assertEqual(
-            dataset.url, datasets.DATASET_REGISTRY["SWellEx96EventS5HLASouth"]
+            dataset.url, "http://swellex96.ucsd.edu/downloads/J1312315.vla.21els.sio.gz"
         )
 
 

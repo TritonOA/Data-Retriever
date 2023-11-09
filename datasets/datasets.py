@@ -50,29 +50,13 @@ class Dataset:
         logger.addHandler(ch)
 
 
-class SWellEx96EventS5VLA(Dataset):
-    url = DATASET_REGISTRY["SWellEx96EventS5VLA"]
-
-    def __init__(self) -> None:
-        super().__init__(self.url)
-
-
-class SWellEx96EventS5TLA(Dataset):
-    url = DATASET_REGISTRY["SWellEx96EventS5TLA"]
-
-    def __init__(self) -> None:
-        super().__init__(self.url)
+def download_data(
+    dataset_name: str, path: Path = Path.cwd(), isverbose: bool = True
+) -> None:
+    dataset = get_dataset(dataset_name)
+    dataset.download(path, isverbose)
 
 
-class SWellEx96EventS5HLANorth(Dataset):
-    url = DATASET_REGISTRY["SWellEx96EventS5HLANorth"]
-
-    def __init__(self) -> None:
-        super().__init__(self.url)
-
-
-class SWellEx96EventS5HLASouth(Dataset):
-    url = DATASET_REGISTRY["SWellEx96EventS5HLASouth"]
-
-    def __init__(self) -> None:
-        super().__init__(self.url)
+def get_dataset(dataset_name: str) -> Dataset:
+    url = DATASET_REGISTRY[dataset_name]
+    return Dataset(url)
