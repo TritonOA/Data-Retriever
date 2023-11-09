@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
 import unittest
 from unittest.mock import patch, MagicMock, Mock
-from pathlib import Path
+
 from datasets import datasets
+from datasets import registry
 
 
 class TestDataset(unittest.TestCase):
@@ -57,7 +59,7 @@ class TestDownloadData(unittest.TestCase):
 
 
 class TestGetDataset(unittest.TestCase):
-    @patch("datasets.datasets.DATASET_REGISTRY", datasets.DATASET_REGISTRY)
+    @patch("datasets.registry.REGISTRY", registry.REGISTRY)
     def test_get_dataset(self):
         dataset = datasets.get_dataset("SWellEx96EventS5VLA")
         self.assertIsInstance(dataset, datasets.Dataset)

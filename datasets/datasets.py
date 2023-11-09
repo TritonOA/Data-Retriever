@@ -5,12 +5,7 @@ from pathlib import Path
 import time
 import urllib.request
 
-DATASET_REGISTRY = {
-    "SWellEx96EventS5VLA": "http://swellex96.ucsd.edu/downloads/J1312315.vla.21els.sio.gz",
-    "SWellEx96EventS5TLA": "http://swellex96.ucsd.edu/downloads/J1312315.tla.22els.sio.gz",
-    "SWellEx96EventS5HLANorth": "http://swellex96.ucsd.edu/downloads/J1312340.hla.north.sio.gz",
-    "SWellEx96EventS5HLASouth": "http://swellex96.ucsd.edu/downloads/J1312340.hla.south.sio.gz",
-}
+import datasets.registry as registry
 
 
 class Dataset:
@@ -58,5 +53,5 @@ def download_data(
 
 
 def get_dataset(dataset_name: str) -> Dataset:
-    url = DATASET_REGISTRY[dataset_name]
+    url = registry.REGISTRY[dataset_name]
     return Dataset(url)
