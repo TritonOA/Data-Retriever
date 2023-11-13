@@ -15,7 +15,7 @@ class Dataset:
 
     def download(self, path: Path = Path.cwd(), isverbose: bool = True) -> None:
         if isverbose:
-            self.log_to_stdout()
+            self.__log_to_stdout()
 
         logging.info(f"Querying {self.url}")
         status, file_size = self.get_status()
@@ -35,7 +35,7 @@ class Dataset:
         file_size = int(f.headers["Content-Length"]) / 1e6
         return f.status, file_size
 
-    def log_to_stdout(self) -> None:
+    def __log_to_stdout(self) -> None:
         logger = logging.getLogger()
         logger.setLevel(logging.INFO)
         ch = logging.StreamHandler()
