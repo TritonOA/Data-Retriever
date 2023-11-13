@@ -21,7 +21,7 @@ We do not maintain these data sets and are unable to answer questions about them
 
 ## Installation
 
-The package can be cloned directly from GitHub, or installed as a dependency via `pip`:
+The package can be cloned directly from GitHub or installed via `pip`:
 ```bash
 pip install git+https://github.com/TritonOA/Data-Retriever.git
 ```
