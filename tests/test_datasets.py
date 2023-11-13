@@ -5,8 +5,7 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch, MagicMock, Mock
 
-from datasets import datasets
-from datasets import registry
+from datasets import datasets, registry
 
 
 class TestDataset(unittest.TestCase):
