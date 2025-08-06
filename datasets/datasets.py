@@ -13,7 +13,7 @@ class Dataset:
         self.url: str = url
         self.filename: str = self.url.split("/")[-1]
 
-    def download(self, path: Path = Path.cwd(), isverbose: bool = True) -> None:
+    def download(self, path: Path = Path.cwd(), isverbose: bool = True) -> Path:
         if isverbose:
             self.__log_to_stdout()
 
@@ -28,6 +28,7 @@ class Dataset:
         urllib.request.urlretrieve(self.url, path / self.url.split("/")[-1])
         elapsed = time.time() - start
         logging.info(f"Downloaded {self.filename} in {elapsed:.2f} seconds")
+        return path / self.filename
 
     def get_status(self) -> tuple[str, float]:
         req = urllib.request.Request(self.url, method="HEAD")
@@ -47,10 +48,9 @@ class Dataset:
 
 def download_data(
     dataset_name: str, path: Path = Path.cwd(), isverbose: bool = True
-) -> str:
+) -> Path:
     dataset = get_dataset(dataset_name)
-    dataset.download(path, isverbose)
-    return dataset.filename
+    return dataset.download(path, isverbose)
 
 
 def get_dataset(dataset_name: str) -> Dataset:
