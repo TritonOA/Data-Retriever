@@ -1,6 +1,6 @@
 [project]
 name = "data-retriever"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python package to retrieve publicly available ocean acoustics data sets."
 readme = "README.md"
 requires-python = ">=3.12"
