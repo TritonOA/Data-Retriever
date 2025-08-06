@@ -10,8 +10,8 @@ import datasets.registry as registry
 
 class Dataset:
     def __init__(self, url: str) -> None:
-        self.url = url
-        self.filename = self.url.split("/")[-1]
+        self.url: str = url
+        self.filename: str = self.url.split("/")[-1]
 
     def download(self, path: Path = Path.cwd(), isverbose: bool = True) -> None:
         if isverbose:
@@ -47,9 +47,10 @@ class Dataset:
 
 def download_data(
     dataset_name: str, path: Path = Path.cwd(), isverbose: bool = True
-) -> None:
+) -> str:
     dataset = get_dataset(dataset_name)
     dataset.download(path, isverbose)
+    return dataset.filename
 
 
 def get_dataset(dataset_name: str) -> Dataset:
